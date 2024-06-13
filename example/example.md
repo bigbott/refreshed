@@ -2,7 +2,7 @@
 
 In this example you will learn the basics of GetX. You will see how much easier it is to code with this framework, and you will know what problems GetX proposes to solve.
 
-If the default Flutter application were rewritten with Getx, it would have only a few lines of code. The Getx state manager is easier than using setState. You just need to add a ".obs" at the end of your variable, and wrap the widget you want to change within a Obx().
+If the default Flutter application were rewritten with Getx, it would have only a few lines of code. The Getx state manager is easier than using setState. You just need to add a ".obs" at the end of your variable, and wrap the widget you want to change within an Obx().
 
 ```dart
 void main() => runApp(MaterialApp(home: Home()));
@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
 }
 ```
 However, this simple example deals with ephemeral state management. If you need to access this data in several places in your application, you will need global state management.
-The most common way to do this is to separate the business logic from its visualization. I know, you've heard this concept before, and it might have been scary for you, but with Getx, it's stupidly simple.
+The most common way to do this is to separate the business logic from its visualization. I know you've heard this concept before, and it might have been scary for you, but with Getx, it's stupidly simple.
 Getx provides you with a class capable of initializing data, and removing it when it is no longer needed, and its use is very simple:
 Just create a class by extending GetxController and insert ALL your variables and functions there.
 
@@ -89,9 +89,9 @@ Navigator.of(context).push(context,
 ``` 
 all that huge code, it's reduced to a simple `Get.to(Second())`. Isn't that incredible?
 
-You may also have noticed that on the other page you simply used Get.find (), and the framework knows which controller you registered previously, and returns it effortlessly, you don't need to type the find with `Get.find<Controller>()` so that he knows what you need.
+You may also have noticed that on the other page, you simply used Get.find (), and the framework knows which controller you registered previously, and returns it effortlessly, you don't need to type the find with `Get.find<Controller>()` so that he knows what you need.
 
-However, this is simple state management. You may want to control the output of each change of state, you may want to use and manipulate streams, you may want a variable to only be changed on the screen, when it definitely changes, you may need a debounce on changing the state, and to these and other needs, Getx has powerful, intelligent, and lightweight state management that can address any need, regardless of the size of your project. And its use is even easier than the previous one.
+However, this is simple state management. You may want to control the output of each change of state, you may want to use and manipulate streams, you may want a variable to only be changed on the screen when it definitely changes, you may need a debounce on changing the state, and to these and other needs, Getx has powerful, intelligent, and lightweight state management that can address any need, regardless of the size of your project. And its use is even easier than the previous one.
 
 In your controller, you can remove the update method, Getx is reactive, so when a variable changes, it will automatically change on the screen.
 You just need to add a ".obs" in front of your variable, and that's it, it's already reactive.
@@ -185,15 +185,23 @@ class Second extends StatelessWidget {
   }
 }
 ```
-If you are a more demanding user, you must have said: BLoC separates the View from the business logic. But what about the presentation logic? Will I be obliged to attach it to the visualization? Will I be totally dependent on the context for everything I want to do? Will I have to insert a bunch of variables, TextEditingControllers in my view? If I need to hear the Scroll on my screen, do I need to insert an initState and a function into my view? If I need to trigger an action when this scroll reaches the end, do I insert it into the view, or in the bloc/changeNotifier class? Well, these are common architectural questions, and most of the time the solution to them is ugly.
-With Getx you have no doubts when your architecture, if you need a function, it must be on your Controller, if you need to trigger an event, it needs to be on your controller, your view is generally a StatelessWidget free from any dirt.
-This means that if someone has already done something you’re looking for, you can copy the controller entirely from someone else, and it will work for you, this level of standardization is what Flutter lacked, and it’s because of this that Getx has become so popular in the last few days. Flutter is amazing, and has minor one-off problems. Getx came to solve these specific problems. Flutter provides powerful APIs, and we turn them into an easy, clean, clear, and concise API for you to build applications in a fast, performance and highly scalable way.
-If you have already asked yourself some of these questions above, you have certainly found the solution to your problems. Getx is able to completely separate any logic, be it presentation or business, and you will only have pure widgets in your visualization layer. No variables, no functions, just widgets. This will facilitate the work of your team working with the UI, as well as your team working with your logic. They won't depend on initState to do anything, their controller has onInit. Your code can be tested in isolation, the way it is.
-But what about dependency injection? Will I have it attached to my visualization?
+If you are a more demanding user, you must have said: BLoC separates the View from the business logic. But what about the presentation logic? Will I be obliged to attach it to the visualization? Will I be totally dependent on the context for everything I want to do? Will I have to insert a bunch of variables, TextEditingControllers in my view? 
+
+If I need to hear the Scroll on my screen, do I need to insert an initState and a function into my view? If I need to trigger an action when this scroll reaches the end, do I insert it into the view, or in the bloc/changeNotifier class? Well, these are common architectural questions, and most of the time the solution to them is ugly.
+
+With Getx you have no doubts when you design your app. If you need a function, it must be on your Controller, if you need to trigger an event, it needs to be on your controller, your view is generally a StatelessWidget free from any dirt.
+
+This means that if someone has already done something you’re looking for, you can copy the controller entirely from someone else, and it will work for you, this level of standardization is what Flutter lacked, and it’s because of this that Getx has become so popular. Flutter is amazing, and has minor one-off problems. Getx came to solve these specific problems. Flutter provides powerful APIs, and we turn them into an easy, clean, clear, and concise API for you to build applications in a fast, performance and highly scalable way.
+
+If you have already asked yourself some of the questions above, you have certainly found the solution to your problems. Getx is able to completely separate any logic, be it presentation or business, and you will only have pure widgets in your visualization layer. No variables, no functions, just widgets. This will facilitate the work of your team working with the UI, as well as your team working with your logic. They won't depend on initState to do anything, their controller has onInit. Your code can be tested in isolation, the way it is.
+
+But what about dependency injection? Would I have to attach it to my views?
 If you've used any state manager, you've probably heard of "multiAnything", or something like that.
 You have probably already inserted dozens of ChangeNotifier or Blocs classes in a widget, just to have it all over the tree.
+
 This level of coupling is yet another problem that Getx came to solve. For this, in this ecosystem we use BINDINGS.
 Bindings are dependency injection classes. They are completely outside your widget tree, making your code cleaner, more organized, and allowing you to access it anywhere without context.
+
 You can initialize dozens of controllers in your Bindings, when you need to know what is being injected into your view, just open the Bindings file on your page and that's it, you can clearly see what has been prepared to be initialized in your View.
 Bindings is the first step towards having a scalable application, you can visualize what will be injected into your page, and decouple the dependency injection from your visualization layer.
 
@@ -277,11 +285,12 @@ class Home extends GetView<Controller> {
       ));
 }
 ```
-What did you do:
-He built an example of the counter, (with less code than the original), decoupling its visualization, its business logic, its dependency injection, in a clean, scalable way, facilitating code maintenance and reusability. If you need an accountant on another project, or your developer friend does, you can just share the content of the controller file with him, and everything will work perfectly.
+What did we do:
+We built an example of the counter, (with less code than the original), decoupling its visualization, its business logic, and its dependency injection, in a clean, scalable way, facilitating code maintenance and reusability. If you need an accountant on another project, or your developer friend does, you can just share the content of the controller file with him, and everything will work perfectly.
+
 As the view has only widgets, you can use a view for android, and another for iOS, taking advantage of 100% of your business logic, your view has only widgets! you can change them however you want, without affecting your application in any way.
 
-However, some examples like internationalization, Snackbars without context, validators, responsiveness and other Getx resources, were not explored (and it would not even be possible to explore all resources in such a simple example), so below is an example not very complete, but trying demonstrate how to use internationalization, reactive custom classes, reactive lists, snackbars contextless, workers etc.
+However, some examples like internationalization, Snackbars without context, validators, responsiveness and other Getx resources, were not explored (and it would not even be possible to explore all resources in such a simple example), so below is an example not very complete, but trying to demonstrate how to use internationalization, reactive custom classes, reactive lists, snackbars contextless, workers etc.
 
 ```dart
 import 'dart:ui';
